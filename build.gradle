@@ -25,6 +25,8 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
+
+	implementation "com.googlecode.json-simple:json-simple:1.1.1"                   // Google Simple JSON
 }
 
 tasks.named('test') {
