@@ -11,7 +11,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.jh.simply.auth.Authentication.model.UserDetailsDto;
-import com.jh.simply.auth.Authentication.service.UserDetailsServiceImpl;
 
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +22,9 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
     
     @Resource
     private UserDetailsService userDetailsService;
+
+    @NonNull
+    private BCryptPasswordEncoder passwordEncoder;
 
     
     @Override
@@ -42,11 +44,21 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
         // Spring Security - UserDetailsService를 통해 DB에서 아이디로 사용자 조회
         UserDetailsDto userDetailsDto = (UserDetailsDto) userDetailsService.loadUserByUsername(userId);
+        log.debug("---------------------------------------------------------------------------------------------------------------------------------------------------0");
+        
+        log.debug(userPw);
+        log.debug(userDetailsDto.getPassword());
+        log.debug(userDetailsDto.getUserPw());
 
-        if(userDetailsDto == null){
-            throw new BadCredentialsException("Invalid user");
-        }else if (!userDetailsDto.getPassword().equalsIgnoreCase(userPw) ) {
-            throw new BadCredentialsException(userDetailsDto.getUsername() + "Invalid password");
+        // if (!userDetailsDto.getPassword().equalsIgnoreCase(userPw) ) {
+        //     log.debug("----------------------------------------------------------------------------------------------------------------------------------------------------2");
+        //     throw new BadCredentialsException(userDetailsDto.getUsername() + "Invalid password");
+        // }
+        // return new UsernamePasswordAuthenticationToken(userDetailsDto, userPw, userDetailsDto.getAuthorities());
+
+        if (!(userDetailsDto.getUserPw().equalsIgnoreCase(userPw) )) {
+            log.debug("---------------------------------------------------------------------------------------------------------------------------------------------------1");
+            throw new BadCredentialsException(userDetailsDto.getUserId() + "Invalid password");
         }
         return new UsernamePasswordAuthenticationToken(userDetailsDto, userPw, userDetailsDto.getAuthorities());
         

@@ -9,9 +9,6 @@ import lombok.*;
 @NoArgsConstructor
 public class UserDto {
     
-    private int userSq;
     private String userId;
     private String userPw;
-    private String userNm;
-    private String userSt = "S";
 }

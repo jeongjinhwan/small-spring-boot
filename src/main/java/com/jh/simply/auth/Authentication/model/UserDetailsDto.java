@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.experimental.Delegate;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -14,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 @AllArgsConstructor
 public class UserDetailsDto implements UserDetails {
     
+    @Delegate
     private UserDto userDto;
     private Collection<? extends GrantedAuthority> authorities;
 
@@ -29,7 +31,7 @@ public class UserDetailsDto implements UserDetails {
 
     @Override
     public String getUsername() {
-        return userDto.getUserNm();
+        return userDto.getUserId();
     }
 
     @Override

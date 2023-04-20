@@ -34,49 +34,45 @@ public class CustomAuthFailureHandler implements AuthenticationFailureHandler {
                                       , HttpServletResponse response
                                       , AuthenticationException exception) throws IOException, ServletException {
                                         
-        log.debug("3.AuthenticationFailureHandler[{}]",this.getClass().getName());
-        try{
-            JSONObject jsonObject = new JSONObject();
-            String failMsg = "";
-    
-            if (exception instanceof AuthenticationServiceException) {
-                failMsg = "로그인 정보가 일치하지 않습니다.";
-    
-            } else if (exception instanceof BadCredentialsException) {
-                failMsg = "로그인 정보가 일치하지 않습니다.";
-    
-            } else if (exception instanceof LockedException) {
-                failMsg = "로그인 정보가 일치하지 않습니다.";
-    
-            } else if (exception instanceof DisabledException) {
-                failMsg = "로그인 정보가 일치하지 않습니다.";
-    
-            } else if (exception instanceof AccountExpiredException) {
-                failMsg = "로그인 정보가 일치하지 않습니다.";
-    
-            } else if (exception instanceof CredentialsExpiredException) {
-                failMsg = "로그인 정보가 일치하지 않습니다.";
-            }
-    
-            response.setCharacterEncoding("UTF-8");
-            response.setContentType("application/json");
-            PrintWriter printWriter = response.getWriter();
-    
-            log.debug(failMsg);
-    
-            HashMap<String, Object> resultMap = new HashMap<>();
-            resultMap.put("userInfo", null);
-            resultMap.put("resultCode", 9999);
-            resultMap.put("failMsg", failMsg);
-            jsonObject = new JSONObject(resultMap);
-    
-            printWriter.print(jsonObject);
-            printWriter.flush();
-            printWriter.close();
-        }catch(EOFException e){
-            log.error("jh io exception");
+        log.debug("3.AuthenticationFailureHandler");
+        JSONObject jsonObject = new JSONObject();
+        String failMsg = "";
+
+        if (exception instanceof AuthenticationServiceException) {
+            failMsg = "로그인 정보가 일치하지 않습니다.";
+
+        } else if (exception instanceof BadCredentialsException) {
+            failMsg = "로그인 정보가 일치하지 않습니다.";
+
+        } else if (exception instanceof LockedException) {
+            failMsg = "로그인 정보가 일치하지 않습니다.";
+
+        } else if (exception instanceof DisabledException) {
+            failMsg = "로그인 정보가 일치하지 않습니다.";
+
+        } else if (exception instanceof AccountExpiredException) {
+            failMsg = "로그인 정보가 일치하지 않습니다.";
+
+        } else if (exception instanceof CredentialsExpiredException) {
+            failMsg = "로그인 정보가 일치하지 않습니다.";
         }
-        
+
+        response.setCharacterEncoding("UTF-8");
+        response.setContentType("application/json");
+        PrintWriter printWriter = response.getWriter();
+
+        log.debug(failMsg);
+
+        HashMap<String, Object> resultMap = new HashMap<>();
+        resultMap.put("userInfo", null);
+        resultMap.put("resultCode", 9999);
+        resultMap.put("failMsg", failMsg);
+        jsonObject = new JSONObject(resultMap);
+
+        printWriter.print(jsonObject);
+        printWriter.flush();
+        printWriter.close();
+        request.setAttribute("failMsg", jsonObject);
 
     }
     
