@@ -21,9 +21,6 @@ public class UserService {
      */
     public Optional<UserDto> login(UserDto userDto) {
         Optional<UserDto> outUserDto = Optional.of(new UserDto("gaebogchi","shinhan@1"));
-        log.debug(userDto.getUserId());
-        log.debug(outUserDto.get().getUserId());
-        
         return outUserDto;
     }
 

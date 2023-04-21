@@ -70,14 +70,10 @@ public class WebSecurityConfig {
     @Bean
     public CustomAuthFilter customAuthenticationFilter() throws Exception{
         log.debug("0.WebSecurityConfig");
-        //CustomAuthFilter customAuthenticationFilter = new CustomAuthFilter("/cuslogin"); 
-
         CustomAuthFilter customAuthenticationFilter = new CustomAuthFilter(authenticationManager());
-        //customAuthenticationFilter.setAuthenticationManager(authenticationManager());
         customAuthenticationFilter.setFilterProcessesUrl("/cuslogin");     // 접근 URL
         customAuthenticationFilter.setAuthenticationSuccessHandler(customLoginSuccessHandler());    // '인증' 성공 시 해당 핸들러로 처리를 전가한다.
         customAuthenticationFilter.setAuthenticationFailureHandler(customLoginFailureHandler());    // '인증' 실패 시 해당 핸들러로 처리를 전가한다.
-        // customAuthenticationFilter.setAuthenticationFailureHandler(new SimpleUrlAuthenticationFailureHandler("/login?error=true"));    // '인증' 실패 시 해당 핸들러로 처리를 전가한다.
         customAuthenticationFilter.afterPropertiesSet();
         return customAuthenticationFilter;
     }
