@@ -1,6 +1,5 @@
 package com.jh.simply.auth.Authentication.handler;
 
-import java.io.EOFException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;

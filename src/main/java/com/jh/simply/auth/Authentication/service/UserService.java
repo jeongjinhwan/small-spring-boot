@@ -2,7 +2,6 @@ package com.jh.simply.auth.Authentication.service;
 
 import lombok.extern.slf4j.Slf4j;
 
-import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.stereotype.Service;
 
 import com.jh.simply.auth.Authentication.model.UserDto;

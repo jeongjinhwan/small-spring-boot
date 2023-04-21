@@ -1,18 +1,13 @@
 package com.jh.simply.auth;
 
-import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.jh.simply.auth.Authentication.filter.CustomAuthFilter;
@@ -24,8 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Configuration
-//@Order(0)
-@EnableWebSecurity
+// @EnableWebSecurity
 public class WebSecurityConfig {
     
     @Bean
@@ -33,8 +27,10 @@ public class WebSecurityConfig {
 
         http
             .csrf().disable()
+            // .authorizeHttpRequests(authz -> {
+            //     authz.antMatchers("asdf").permitAll().anyRequest().authenticated();
+            // })
             .authorizeHttpRequests(authz -> authz.anyRequest().permitAll())
-            //.addFilterBefore(jwtAuthorizationFilter(), BasicAuthenticationFilter.class)
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
             .formLogin().disable()
