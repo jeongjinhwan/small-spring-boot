@@ -1,0 +1,78 @@
+<!DOCTYPE HTML>
+
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $("#conn").on("click", (e) => {
+                ws.connec();
+            });
+
+            $("#disconn").on("click", (e) => {
+                ws.closeSocket();
+            });
+
+            $("#button-send").on("click", (e) => {
+                ws.send($("#msg").val());
+            });
+
+        });
+        let websocket;
+        let ws =  {
+            connec : () => {
+                websocket = new WebSocket("ws://localhost:8081/simply/ws/chat");
+                websocket.onmessage = ws.receiveMsg;
+                websocket.onopen = ws.openSocket;
+                websocket.onclose = ws.closeSocket;
+            },
+            receiveMsg : (msg) =>{
+                // let data = msg.data;
+                console.log("onMessage:", msg);
+            },
+            openSocket : (evt) =>{
+                console.log(evt);
+                let msg1 = "접속 하였습니다.";
+                websocket.send(msg1);
+            },
+            closeSocket : (evt) =>{
+                console.log(evt);
+                let msg1 = "접속을 종료 하였습니다.";
+                websocket.send(msg1);
+                websocket.close();
+            },
+            send : (msg) => {
+                websocket.send(msg);
+            }
+        };
+
+
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <button class="btn btn-outline-secondary" type="button" id="conn">conn</button>
+        <button class="btn btn-outline-secondary" type="button" id="disconn">disconn</button>
+        <div class="col-6">
+            <label><b>chat</b></label>
+        </div>
+        <div>
+            <div id="msgArea" class="col"></div>
+            <div class="col-6">
+                <div class="input-group mb-3">
+                    <input type="text" id="msg" class="form-control" aria-label="Recipient's username"
+                        aria-describedby="button-addon2">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="button" id="button-send">send</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
