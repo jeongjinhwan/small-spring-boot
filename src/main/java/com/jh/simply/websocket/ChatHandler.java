@@ -21,12 +21,9 @@ public class ChatHandler extends TextWebSocketHandler {
         String payload = message.getPayload();
         log.info("payload : " + payload);
 
-        // while(true){
-            for(WebSocketSession sess: list) {
-                sess.sendMessage(message);
-            }
-            // Thread.sleep(1000);
-        // }
+        for (WebSocketSession sess : list) {
+            sess.sendMessage(message);
+        }
     }
 
     /* Client가 접속 시 호출되는 메서드 */
@@ -36,16 +33,19 @@ public class ChatHandler extends TextWebSocketHandler {
         list.add(session);
 
         log.info(session + " 클라이언트 접속");
-        // String payload = message.getPayload();
-        // session.sendMessage("접속 하였습니다.");
+        TextMessage message = new TextMessage("어서 오시오.server", false);
+        session.sendMessage(message);
     }
 
     /* Client가 접속 해제 시 호출되는 메서드드 */
-
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
 
         log.info(session + " 클라이언트 접속 해제");
+        // 종료 시 이렇게 메시지 전달 안됨.
+        // TextMessage message = new TextMessage("가.server", false);
+        // session.sendMessage(message);
+
         list.remove(session);
     }
 }
